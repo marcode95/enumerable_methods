@@ -74,3 +74,27 @@ end
 
 #my_arr = [1, 2, 3, 4, 5, 6]
 #my_select(my_arr){ |x| x != 3 }
+
+# my_all?
+
+def my_all?(arr)  
+  my_each(arr) do |element|
+    return false unless yield(element)
+    return true
+  end
+end    
+
+# my_arr = [1, 2, 3, 4, 5, 6]
+# puts my_all?(my_arr){ |x| x < 10 }
+
+# my_any?
+
+def my_any?(arr)  
+  (0...arr.length) do |element|
+    return true if yield(element)
+    return false    
+  end  
+end 
+
+my_arr = [1, 2, 3, 4, 5, 6]
+puts my_all?(my_arr){ |x| x > 3 }
