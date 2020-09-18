@@ -1,17 +1,26 @@
+# for array
 
 def my_each(arr)
-  i = 0
-  while i < arr.length
-    yield(arr[i])
+  if arr.kind_of?(Array) == true 
+    i = 0
+    while i < arr.length
+      yield(arr[i])
+      i += 1
+    end  
+  else    
+    i = 0
+    while i < arr.length
+    yield(arr.keys[i], arr.values[i])
     i += 1
+    end  
   end  
 end
 
-
-
-my_each({"name" => "eric", "age" => 26, "hungry" => true}) do |x, y| 
-  puts "#{x}" "#{y}"
+my_each(["name", "eric", 6, "hungry"]) do |x| 
+  puts "#{x}" 
 end
 
-restaurant_menu = { "Ramen" => 3, "Dal Makhani" => 4, "Coffee" => 2 }
- restaurant_menu.my_each do | item, price | puts "#{item}: $#{price}" end 
+my_each({"name" => "rick", "age" => 7, "hungry" => true}) do |x, y|
+  puts "#{x}" " #{y}" 
+end
+
