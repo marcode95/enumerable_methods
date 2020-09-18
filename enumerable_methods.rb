@@ -85,16 +85,20 @@ def my_all?(arr)
 end    
 
 # my_arr = [1, 2, 3, 4, 5, 6]
-# puts my_all?(my_arr){ |x| x < 10 }
+# puts my_all?(my_arr){ |x| x > 0 }
 
 # my_any?
 
-def my_any?(arr)  
-  (0...arr.length) do |element|
-    return true if yield(element)
-    return false    
-  end  
-end 
+def my_any?(arr)
+  condition = false  
+  my_each(arr) do |element|
+    if yield(element)
+      condition = true
+      break
+    end
+  end
+  condition
+end  
 
 my_arr = [1, 2, 3, 4, 5, 6]
-puts my_all?(my_arr){ |x| x > 3 }
+puts my_any?(my_arr){ |x| x >  6 }
