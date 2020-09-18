@@ -170,3 +170,13 @@ end
 # puts my_inject(my_arr, 1){ |sum, number| sum * number }
 
 
+
+#multiply_els
+
+def multiply_els(arr)
+  product = my_inject(arr, 1){ |sum, number| sum * number }
+  product
+end
+my_arr = [2, 4, 5]
+puts multiply_els(my_arr)
+
