@@ -138,7 +138,35 @@ def my_count(arr)
   end
 end
 
-#my_arr = [1, 2, 3, 4, 5, 6]
-#my_count(my_arr)
+# my_arr = [1, 2, 3, 4, 5]
+# my_count(my_arr) 
+
+
+
+#my_map
+
+def my_map(arr)
+  new_arr = []
+  my_each(arr) do |element|    
+    new_arr.push(yield(element))
+  end
+  new_arr
+end
+
+# my_arr = [1, 2, 3, 4, 5, 6]
+# puts my_map(my_arr){ |x| x + 3 }
+
+
+# my_inject
+
+def my_inject(arr, start)
+  result = 0 + start
+  my_each(arr) do |element| 
+    result = yield(result, element)
+  end
+  result
+end
+# my_arr = [1, 2, 3, 4, 5, 6]
+# puts my_inject(my_arr, 1){ |sum, number| sum * number }
 
 
