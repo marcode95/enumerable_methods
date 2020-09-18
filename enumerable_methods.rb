@@ -75,6 +75,8 @@ end
 #my_arr = [1, 2, 3, 4, 5, 6]
 #my_select(my_arr){ |x| x != 3 }
 
+
+
 # my_all?
 
 def my_all?(arr)  
@@ -86,6 +88,8 @@ end
 
 # my_arr = [1, 2, 3, 4, 5, 6]
 # puts my_all?(my_arr){ |x| x > 0 }
+
+
 
 # my_any?
 
@@ -100,5 +104,41 @@ def my_any?(arr)
   condition
 end  
 
-my_arr = [1, 2, 3, 4, 5, 6]
-puts my_any?(my_arr){ |x| x >  6 }
+#my_arr = [1, 2, 3, 4, 5, 6]
+#puts my_any?(my_arr){ |x| x >  6 }
+
+
+
+# my_none?
+
+def my_none?(arr)  
+  my_each(arr) do |element|
+    return true unless yield(element)
+    return false
+  end
+end    
+
+#my_arr = [1, 2, 3, 4, 5, 6]
+#puts my_none?(my_arr){ |x| x > 3 }
+
+
+
+#count
+
+def my_count(arr)
+  if block_given?
+    new_arr = []
+    my_each(arr) do |element|
+      next unless yield(element)
+      new_arr.push(element)
+    end
+    puts new_arr.length
+  else
+    puts arr.length
+  end
+end
+
+#my_arr = [1, 2, 3, 4, 5, 6]
+#my_count(my_arr)
+
+
