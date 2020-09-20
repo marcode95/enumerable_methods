@@ -100,6 +100,35 @@ end
 # puts my_all?(my_arr){ |x| x > 0 }
 
 
+# my_all? ALTERNATIVE
+
+def my_all?(arr)
+  if arr.kind_of?(Array) == true 
+    condition = true
+    my_each(arr) do |element|
+      if yield(element) == false
+        condition = false
+        break
+      end
+    end
+    condition
+  else
+    condition = true
+    my_each(arr) do |key, value|
+      if yield(key, value) == false
+        condition = false
+        break
+      end
+    end
+    condition
+  end
+end    
+
+my_arr = [1, 2, 3, 4, 5, 6]
+hash = {"name" => "rick", "age" => 7, "hungry" => true}
+puts my_all?(my_arr){|x| x < 3}
+puts my_all?(hash){|k, v| v == ("rick" || true)}
+
 
 # my_any?
 
