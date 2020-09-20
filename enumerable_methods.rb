@@ -64,16 +64,26 @@ end
 #select
 
 def my_select(arr)
-  new_arr = []
-  my_each(arr) do |element|
-    next unless yield(element)
-    new_arr.push(element)
+  if arr.kind_of?(Array) == true 
+    new_arr = []
+    my_each(arr) do |element|
+      next unless yield(element)
+      new_arr.push(element)
+    end
+    puts new_arr
+  else
+    new_hash = {}
+    my_each(arr) do |key, value|
+      next unless yield(key, value)
+      new_hash[key] = value
+    end
+    puts new_hash
   end
-  puts new_arr
 end
 
 #my_arr = [1, 2, 3, 4, 5, 6]
-#my_select(my_arr){ |x| x != 3 }
+#hash = {"name" => "rick", "age" => 7, "hungry" => true}
+#my_select(hash){ |k, v| k != "age" }
 
 
 
