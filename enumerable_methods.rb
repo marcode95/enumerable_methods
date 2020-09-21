@@ -135,34 +135,38 @@ end
 
 #my_map
 
-def my_map
-  arr = *self
+def my_map(my_proc = nil)
+  return LocalJumpError unless block_given?  
   new_arr = []
-  arr.my_each do |element|    
-    new_arr.push(yield(element))
-  end
+  if (my_proc)
+    my_each  { |i| new_arr.push my_proc.call(i) }  
+  else
+    my_each { |i| new_arr.push (yield(i)) }
+  end  
   new_arr
 end
+
+
+# my_arr = [1, 2, 3, 4, 5]
+# p = Proc.new {|x| x + 9} 
+# print my_arr.my_map &p 
+
+
+# my_inject
+
+def my_inject(arg1)
+  arr = *self
+  return LocalJumpError unless block_given?
+  result = 0 + arg1
+  arr.my_each do |element| 
+    result = yield(result, element)
+  end
+  result
 end
-
+end
 my_arr = [1, 2, 3, 4, 5, 6]
-p = Proc.new { |x| x + 3 }  
-puts p.my_map 
+puts my_arr.my_inject(0){ |sum, number| sum + number }
 
 
-# # my_inject
-
-# def my_inject(arr, start)
-#   result = 0 + start
-#   my_each(arr) do |element| 
-#     result = yield(result, element)
-#   end
-#   result
-# end
-# # my_arr = [1, 2, 3, 4, 5, 6]
-# # puts my_inject(my_arr, 1){ |sum, number| sum * number }
-
-
-# end
 
 
