@@ -66,6 +66,10 @@ def my_all?
   condition  
 end
 
+#my_arr = {"name" => 1, "age" => 7, "hungry" => 4}
+#puts my_arr.my_all? {|k, v| v < 5}
+
+
 
 # my_any?
 
@@ -100,45 +104,50 @@ def my_none?
   end
   condition
 end
-end    
+ 
 
-my_arr = [1, 2, 3, 4, 5, 6]
-puts my_arr.my_none? { |x| x < 3 }
+#my_arr = [1, 2, 3, 4, 5, 6]
+#puts my_arr.my_none? { |x| x < 3 }
 
 
 
 # #count
 
-# def my_count(arr)
-#   if block_given?
-#     new_arr = []
-#     my_each(arr) do |element|
-#       next unless yield(element)
-#       new_arr.push(element)
-#     end
-#     puts new_arr.length
-#   else
-#     puts arr.length
-#   end
-# end
-
-# # my_arr = [1, 2, 3, 4, 5]
-# # my_count(my_arr) 
+def my_count
+  arr = *self
+  if block_given?
+    new_arr = []
+    arr.my_each do |element|
+      next unless yield(element)
+      new_arr.push(element)
+    end
+    puts new_arr.length
+  else
+    puts arr.length
+  end
+end
 
 
+#my_arr = [1, 2, 3, 4, 5]
+#my_arr.my_count { |x| x < 3 }
 
-# #my_map
 
-# def my_map(arr)
-#   new_arr = []
-#   my_each(arr) do |element|    
-#     new_arr.push(yield(element))
-#   end
-#   new_arr
-# end
 
-# # my_arr = [1, 2, 3, 4, 5, 6]
-# # puts my_map(my_arr){ |x| x + 3 }
+#my_map
+
+def my_map
+  arr = *self
+  new_arr = []
+  arr.my_each do |element|    
+    new_arr.push(yield(element))
+  end
+  new_arr
+end
+end
+
+my_arr = [1, 2, 3, 4, 5, 6]
+p = Proc.new { |x| x + 3 }  
+puts p.my_map 
 
 
 # # my_inject
