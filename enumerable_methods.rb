@@ -26,7 +26,7 @@ def my_each_index
     i += 1
   end   
 end
-end
+
 
 # arr4 = {"name" => "rick", "age" => 7, "hungry" => true}
 # arr4.my_each_index do |element, index|
@@ -37,101 +37,73 @@ end
 
 #select
 
-def my_select(arr)
-  if arr.kind_of?(Array) == true 
-    new_arr = []
-    my_each(arr) do |element|
-      next unless yield(element)
-      new_arr.push(element)
-    end
-    puts new_arr
-  else
-    new_hash = {}
-    my_each(arr) do |key, value|
-      next unless yield(key, value)
-      new_hash[key] = value
-    end
-    puts new_hash
+def my_select
+  arr = *self  
+  new_arr = []
+  arr.my_each do |element|
+    next unless yield(element)
+    new_arr.push(element)
   end
+  new_arr  
 end
 
-#my_arr = [1, 2, 3, 4, 5, 6]
-#hash = {"name" => "rick", "age" => 7, "hungry" => true}
-#my_select(hash){ |k, v| k != "age" }
 
-
+# my_arr = [1, 2, 3, 4, 5, 6]
+# my_arr.my_select {|x| x < 5}
 
 # my_all?
 
-def my_all?(arr)  
-  my_each(arr) do |element|
-    return false unless yield(element)
-    return true
+def my_all?
+  return LocalJumpError unless block_given?
+  arr = *self  
+  condition = true
+  arr.my_each do |element|
+    if yield(element) == false
+      condition = false
+      break
+    end
   end
-end    
+  condition  
+end
+
+
+# my_any?
+
+def my_any?
+  arr = *self 
+  condition = false  
+  arr.my_each do |element|
+    if yield(element)
+      condition = true
+      break
+    end
+  end
+  condition
+end
+  
 
 # my_arr = [1, 2, 3, 4, 5, 6]
-# puts my_all?(my_arr){ |x| x > 0 }
+# puts my_arr.my_any? { |x| x > 2 }
 
 
-# my_all? ALTERNATIVE
+# my_none?
 
-def my_all?(arr)
-  if arr.kind_of?(Array) == true 
-    condition = true
-    my_each(arr) do |element|
-      if yield(element) == false
-        condition = false
-        break
-      end
+def my_none?  
+ return LocalJumpError unless block_given?
+  arr = *self  
+  condition = true
+  arr.my_each do |element|
+    if yield(element) == true
+      condition = false
+      break
     end
-    condition
-  else
-    condition = true
-    my_each(arr) do |key, value|
-      if yield(key, value) == false
-        condition = false
-        break
-      end
-    end
-    condition
   end
+  condition
+end
 end    
 
 my_arr = [1, 2, 3, 4, 5, 6]
-hash = {"name" => "rick", "age" => 7, "hungry" => true}
-puts my_all?(my_arr){|x| x < 3}
-puts my_all?(hash){|k, v| v == ("rick" || true)}
-
-# # my_any?
-
-# def my_any?(arr)
-#   condition = false  
-#   my_each(arr) do |element|
-#     if yield(element)
-#       condition = true
-#       break
-#     end
-#   end
-#   condition
-# end  
-
-# #my_arr = [1, 2, 3, 4, 5, 6]
-# #puts my_any?(my_arr){ |x| x >  6 }
-
-
-
-# # my_none?
-
-# def my_none?(arr)  
-#   my_each(arr) do |element|
-#     return true unless yield(element)
-#     return false
-#   end
-# end    
-
-# #my_arr = [1, 2, 3, 4, 5, 6]
-# #puts my_none?(my_arr){ |x| x > 3 }
+puts my_arr.my_none? { |x| x < 3 }
 
 
 
