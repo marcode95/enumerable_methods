@@ -1,6 +1,9 @@
 
-# my_each
 module Enumerable
+
+
+# my_each
+
 def my_each
   arr = *self   
   i = 0
@@ -10,11 +13,6 @@ def my_each
     end  
 end
 
-
-# arr4 = {"name" => "rick", "age" => 7, "hungry" => true}
-# arr4.my_each do |x, y| 
-#   puts "#{x}" " #{y}"
-# end
 
 # my_each_with_index
 
@@ -26,13 +24,6 @@ def my_each_index
     i += 1
   end   
 end
-
-
-# arr4 = {"name" => "rick", "age" => 7, "hungry" => true}
-# arr4.my_each_index do |element, index|
-#   puts element if index.even?
-# end
-
 
 
 #select
@@ -47,9 +38,6 @@ def my_select
   new_arr  
 end
 
-
-# my_arr = [1, 2, 3, 4, 5, 6]
-# my_arr.my_select {|x| x < 5}
 
 # my_all?
 
@@ -66,10 +54,6 @@ def my_all?
   condition  
 end
 
-#my_arr = {"name" => 1, "age" => 7, "hungry" => 4}
-#puts my_arr.my_all? {|k, v| v < 5}
-
-
 
 # my_any?
 
@@ -84,10 +68,6 @@ def my_any?
   end
   condition
 end
-  
-
-# my_arr = [1, 2, 3, 4, 5, 6]
-# puts my_arr.my_any? { |x| x > 2 }
 
 
 # my_none?
@@ -104,14 +84,9 @@ def my_none?
   end
   condition
 end
- 
-
-#my_arr = [1, 2, 3, 4, 5, 6]
-#puts my_arr.my_none? { |x| x < 3 }
 
 
-
-# #count
+#count
 
 def my_count
   arr = *self
@@ -128,11 +103,6 @@ def my_count
 end
 
 
-#my_arr = [1, 2, 3, 4, 5]
-#my_arr.my_count { |x| x < 3 }
-
-
-
 #my_map
 
 def my_map(my_proc = nil)
@@ -147,11 +117,6 @@ def my_map(my_proc = nil)
 end
 
 
-# my_arr = [1, 2, 3, 4, 5]
-# p = Proc.new {|x| x + 9} 
-# print my_arr.my_map &p 
-
-
 # my_inject
 
 def my_inject(arg1)
@@ -163,9 +128,19 @@ def my_inject(arg1)
   end
   result
 end
+
+
+# multiply_els
+
+def multiply_els
+  arr = *self
+  arr.my_inject(1) { |sum, number| sum * number }
 end
-my_arr = [1, 2, 3, 4, 5, 6]
-puts my_arr.my_inject(0){ |sum, number| sum + number }
+
+end
+
+
+
 
 
 
