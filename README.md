@@ -76,4 +76,4 @@ Give a ⭐️ if you like this project!
 
 ## 📝 License
 
-License This project is a collaboration project of microverse students. All rights are reserved for Ntwali and Abhigyan.
+License This project is a collaboration project of microverse students. All rights are reserved for Marco and Abhigyan.
