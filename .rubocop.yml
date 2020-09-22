@@ -1,4 +1,3 @@
-
 AllCops:
   Exclude:
     - "Guardfile"
@@ -7,17 +6,22 @@ AllCops:
   DisplayCopNames: true
 
 Layout/LineLength:
-  Max: 120
+  Max: 220
 Metrics/MethodLength:
-  Max: 20
+  Max: 220
 Metrics/AbcSize:
-  Max: 50
+  Max: 250
 Metrics/ClassLength:
-  Max: 150
+  Max: 250
 Metrics/BlockLength:
-  ExcludedMethods: ['describe']
-  Max: 30
-
+  ExcludedMethods: ["describe"]
+  Max: 200
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+Metrics/ModuleLength:
+  Enabled: false
 
 Style/Documentation:
   Enabled: false
@@ -31,6 +35,8 @@ Style/DefWithParentheses:
   Enabled: false
 Style/FrozenStringLiteralComment:
   EnforcedStyle: never
+Style/IfInsideElse:
+  Enabled: false
 
 Layout/HashAlignment:
   EnforcedColonStyle: key

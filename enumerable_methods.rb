@@ -3,6 +3,7 @@ module Enumerable
 
   def my_each
     return enum_for(:my_each) unless block_given?
+
     arr = *self
     i = 0
     while i < arr.length
@@ -16,6 +17,7 @@ module Enumerable
 
   def my_each_with_index
     return enum_for(:my_each_with_index) unless block_given?
+
     arr = *self
     i = 0
     while i < arr.length
@@ -29,6 +31,7 @@ module Enumerable
 
   def my_select
     return enum_for(:my_select) unless block_given?
+
     arr = *self
     new_arr = []
     arr.my_each do |element|
@@ -55,13 +58,13 @@ module Enumerable
           break
         end
       else
-        if block_given?        
-          if yield(element) == false || element == nil
+        if block_given?
+          if yield(element) == false || element.nil?
             condition = false
             break
           end
-        else        
-          if element == false || element == nil
+        else
+          if element == false || element.nil?
             condition = false
             break
           end
@@ -87,13 +90,13 @@ module Enumerable
           break
         end
       else
-        if block_given?        
-          if yield(element) || element == nil
+        if block_given?
+          if yield(element) || element.nil?
             condition = true
             break
           end
-        else        
-          if element || element == nil
+        else
+          if element || element.nil?
             condition = true
             break
           end
@@ -113,22 +116,21 @@ module Enumerable
 
   def my_count(arg = nil)
     arr = *self
-    if block_given? && arg == nil
+    if block_given? && arg.nil?
       new_arr = []
       arr.my_each do |element|
         next unless yield(element)
+
         new_arr.push(element)
       end
       new_arr.length
-    elsif (!block_given? && arg != nil) || (block_given? && arg != nil)
+    elsif (!block_given? && !arg.nil?) || (block_given? && !arg.nil?)
       new_arr = []
       arr.my_each do |element|
-        if element == arg
-          new_arr.push(element)
-        end
+        new_arr.push(element) if element == arg
       end
       new_arr.length
-    else 
+    else
       arr.length
     end
   end
@@ -136,8 +138,8 @@ module Enumerable
   # my_map
 
   def my_map(my_proc = nil)
-    return enum_for(:my_map
-    ) unless block_given?
+    return enum_for(:my_map) unless block_given?
+
     new_arr = []
     if my_proc
       my_each { |i| new_arr.push my_proc.call(i) }
@@ -151,6 +153,7 @@ module Enumerable
 
   def my_inject(arg1 = 0, arg2 = nil)
     return raise LocalJumpError if !block_given? && !arg1
+
     if block_given?
       result = arg1
       my_each do |element|
@@ -163,15 +166,13 @@ module Enumerable
       end
     elsif !block_given? && !arg2
       result = 0
-      if arg1 == (:* || "*")
-        result = 1
-      end
+      result = 1 if arg1 == (:* || '*')
       my_each do |element|
         result = result.send arg1, element
       end
     end
     result
-  end   
+  end
 end
 
 def multiply_els(arg1 = nil)
