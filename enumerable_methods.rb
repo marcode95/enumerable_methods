@@ -178,5 +178,3 @@ end
 def multiply_els(arg1 = nil)
   arg1.my_inject(:*)
 end
-
-# puts multiply_els([2, 4, 5])
