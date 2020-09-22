@@ -111,18 +111,25 @@ module Enumerable
 
   # count
 
-  def my_count
+  def my_count(arg = nil)
     arr = *self
-    if block_given?
+    if block_given? && arg == nil
       new_arr = []
       arr.my_each do |element|
         next unless yield(element)
-
         new_arr.push(element)
       end
-      puts new_arr.length
-    else
-      puts arr.length
+      new_arr.length
+    elsif (!block_given? && arg != nil) || (block_given? && arg != nil)
+      new_arr = []
+      arr.my_each do |element|
+        if element == arg
+          new_arr.push(element)
+        end
+      end
+      new_arr.length
+    else 
+      arr.length
     end
   end
 
@@ -162,16 +169,20 @@ def multiply_els
 end
 
 
-#p [1, 2, 3].my_all? {|x| puts x}
-p ["an", "bear", "ca"].my_all?(/t/)
-p ["an", "bear", "ca"].my_any?(/t/)
-p ["an", "bear", "ca"].my_none?(/t/)
+# #p [1, 2, 3].my_all? {|x| puts x}
+# p ["an", "bear", "ca"].my_all?(/t/)
+# p ["an", "bear", "ca"].my_any?(/t/)
+# p ["an", "bear", "ca"].my_none?(/t/)
 
-#p {"name" => 1, "age" => 7, "hungry" => 4}.my_all? {|k, v| v > 3}
+# #p {"name" => 1, "age" => 7, "hungry" => 4}.my_all? {|k, v| v > 3}
 
 
-my_arr = [1,2,nil,4,5,56]
-#puts my_arr.my_all?
+# my_arr = [1,2,nil,4,5,56]
+# #puts my_arr.my_all?
+
+my_arr = [1, 2, 3, 2, 5]
+p my_arr.my_count(2) { |x| x < 3 }
+
 
 
 
