@@ -150,29 +150,32 @@ module Enumerable
   # my_inject
 
   def my_inject(arg1 = 0, arg2 = nil)
-    #return raise LocalJumpError unless block_given? || arg2
-    result = arg1
+    return raise LocalJumpError if !block_given? && !arg1
     if block_given?
+      result = arg1
       my_each do |element|
         result = yield(result, element)
       end
-    elsif !block_given? && arg2
-      if arg1 == :* && !arg2
+    elsif !block_given? && arg1 && arg2
+      result = arg1
+      my_each do |element|
+        result = result.send arg2, element
+      end
+    elsif !block_given? && !arg2
+      result = 0
+      if arg1 == (:* || "*")
         result = 1
-        print result
       end
       my_each do |element|
         result = result.send arg1, element
       end
     end
     result
-  end  
+  end   
 end
 my_arr = [1, 2, 3, 4, 5, 6]
 puts my_arr.my_inject(:*)
 
-a = :*
-puts true if a == :*
 
 # multiply_els
 
