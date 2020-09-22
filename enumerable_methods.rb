@@ -2,28 +2,33 @@ module Enumerable
   # my_each
 
   def my_each
+    return enum_for(:my_each) unless block_given?
     arr = *self
     i = 0
     while i < arr.length
       yield(arr[i])
       i += 1
     end
+    arr
   end
 
   # my_each_with_index
 
-  def my_each_index
+  def my_each_with_index
+    return enum_for(:my_each_with_index) unless block_given?
     arr = *self
     i = 0
     while i < arr.length
       yield(arr[i], i)
       i += 1
     end
+    arr
   end
 
   # select
 
   def my_select
+    return enum_for(:my_select) unless block_given?
     arr = *self
     new_arr = []
     arr.my_each do |element|
@@ -36,15 +41,19 @@ module Enumerable
 
   # my_all?
 
-  def my_all?
-    return LocalJumpError unless block_given?
-
-    arr = *self
+  def my_all?    
     condition = true
-    arr.my_each do |element|
-      if yield(element) == false
-        condition = false
-        break
+    my_each do |element|
+      if block_given?        
+        if yield(element) == false || element == nil
+          condition = false
+          break
+        end
+      else        
+        if element == false || element == nil
+          condition = false
+          break
+        end
       end
     end
     condition
@@ -53,6 +62,7 @@ module Enumerable
   # my_any?
 
   def my_any?
+    return true unless block_given?
     arr = *self
     condition = false
     arr.my_each do |element|
@@ -67,8 +77,7 @@ module Enumerable
   # my_none?
 
   def my_none?
-    return LocalJumpError unless block_given?
-
+    return true unless block_given?
     arr = *self
     condition = true
     arr.my_each do |element|
@@ -100,8 +109,8 @@ module Enumerable
   # my_map
 
   def my_map(my_proc = nil)
-    return LocalJumpError unless block_given?
-
+    return enum_for(:my_map
+    ) unless block_given?
     new_arr = []
     if my_proc
       my_each { |i| new_arr.push my_proc.call(i) }
@@ -122,12 +131,20 @@ module Enumerable
       result = yield(result, element)
     end
     result
-  end
-
-  # multiply_els
-
-  def multiply_els
-    arr = *self
-    arr.my_inject(1) { |sum, number| sum * number }
-  end
+  end  
 end
+
+# multiply_els
+
+def multiply_els
+  arr = *self
+  arr.my_inject(1) { |sum, number| sum * number }
+end
+
+# p [nil, true, 99].my_all? 
+
+my_arr = [1,2,nil,4,5,56]
+puts my_arr.my_all?
+
+
+
