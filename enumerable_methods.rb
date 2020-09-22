@@ -41,18 +41,30 @@ module Enumerable
 
   # my_all?
 
-  def my_all?    
+  def my_all?(arg)
     condition = true
     my_each do |element|
-      if block_given?        
-        if yield(element) == false || element == nil
+      if arg.is_a?(Class)
+        if element.is_a?(arg) == false
           condition = false
           break
         end
-      else        
-        if element == false || element == nil
+      elsif arg.is_a?(Regexp)
+        if element.match?(arg) == false
           condition = false
           break
+        end
+      else
+        if block_given?        
+          if yield(element) == false || element == nil
+            condition = false
+            break
+          end
+        else        
+          if element == false || element == nil
+            condition = false
+            break
+          end
         end
       end
     end
@@ -141,10 +153,14 @@ def multiply_els
   arr.my_inject(1) { |sum, number| sum * number }
 end
 
-# p [nil, true, 99].my_all? 
+
+p ["ant", "beart", "cat"].my_all?(/t/)
+
+#p {"name" => 1, "age" => 7, "hungry" => 4}.my_all? {|k, v| v > 3}
+
 
 my_arr = [1,2,nil,4,5,56]
-puts my_arr.my_all?
+#puts my_arr.my_all?
 
 
 
