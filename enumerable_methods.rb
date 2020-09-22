@@ -41,7 +41,7 @@ module Enumerable
 
   # my_all?
 
-  def my_all?(arg)
+  def my_all?(arg = nil)
     condition = true
     my_each do |element|
       if arg.is_a?(Class)
@@ -73,14 +73,31 @@ module Enumerable
 
   # my_any?
 
-  def my_any?
-    return true unless block_given?
-    arr = *self
+  def my_any?(arg = nil)
     condition = false
-    arr.my_each do |element|
-      if yield(element)
-        condition = true
-        break
+    my_each do |element|
+      if arg.is_a?(Class)
+        if element.is_a?(arg)
+          condition = true
+          break
+        end
+      elsif arg.is_a?(Regexp)
+        if element.match?(arg)
+          condition = true
+          break
+        end
+      else
+        if block_given?        
+          if yield(element) || element == nil
+            condition = true
+            break
+          end
+        else        
+          if element || element == nil
+            condition = true
+            break
+          end
+        end
       end
     end
     condition
@@ -88,17 +105,8 @@ module Enumerable
 
   # my_none?
 
-  def my_none?
-    return true unless block_given?
-    arr = *self
-    condition = true
-    arr.my_each do |element|
-      if yield(element) == true
-        condition = false
-        break
-      end
-    end
-    condition
+  def my_none?(arg = nil)
+    !my_any?(arg)
   end
 
   # count
@@ -154,7 +162,10 @@ def multiply_els
 end
 
 
-p ["ant", "beart", "cat"].my_all?(/t/)
+#p [1, 2, 3].my_all? {|x| puts x}
+p ["an", "bear", "ca"].my_all?(/t/)
+p ["an", "bear", "ca"].my_any?(/t/)
+p ["an", "bear", "ca"].my_none?(/t/)
 
 #p {"name" => 1, "age" => 7, "hungry" => 4}.my_all? {|k, v| v > 3}
 
