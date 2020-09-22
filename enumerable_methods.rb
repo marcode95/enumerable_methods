@@ -149,17 +149,19 @@ module Enumerable
 
   # my_inject
 
-  def my_inject(arg1)
-    arr = *self
-    return LocalJumpError unless block_given?
-
+  def my_inject(arg1 = nil, arg2 = nil)
+    return raise LocalJumpError unless block_given? && !arg1
     result = 0 + arg1
-    arr.my_each do |element|
+    my_each do |element|
       result = yield(result, element)
     end
     result
   end  
 end
+
+my_arr = [1, 2, 3, 4, 5, 6]
+puts my_arr.my_inject(0){ |sum, number| sum + number }
+
 
 # multiply_els
 
