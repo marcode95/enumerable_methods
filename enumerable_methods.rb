@@ -46,6 +46,12 @@ module Enumerable
   def my_all?(arg = nil)
     condition = true
     my_each do |element|
+      if arg.is_a?(Integer)
+        if element != arg
+          condition = false
+          break
+        end
+      end
       if arg.is_a?(Class)
         if element.is_a?(arg) == false
           condition = false
@@ -179,6 +185,8 @@ def multiply_els(arg1 = nil)
 end
 
 
-block = proc { |num| num < 4 }
-range = Range.new(5, 50) 
-puts range.my_each_with_index(&block) === range.each_with_index(&block)
+#block = proc { |num| num < 4 }
+#range = Range.new(5, 50) 
+#puts range.my_each_with_index(&block) === range.each_with_index(&block)
+
+puts [5, 3, 3, 2, 4, 8, 3, 6, 5, 0, 1, 5].my_all?(Float)
