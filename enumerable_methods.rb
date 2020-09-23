@@ -3,12 +3,13 @@ module Enumerable
 
   def my_each
     return enum_for(:my_each) unless block_given?
-      arr = *self
-      i = 0
-      while i < arr.length
-        yield(arr[i])
-        i += 1
-      end
+
+    arr = *self
+    i = 0
+    while i < arr.length
+      yield(arr[i])
+      i += 1
+    end
     self
   end
 
@@ -109,10 +110,8 @@ module Enumerable
           condition = false
           break
         end
-      elsif arg = nil && !block_given?
-        if element == false
-          break
-        end
+      elsif arg.nil? && !block_given?
+        break if element == false
       end
     end
     condition
@@ -164,20 +163,19 @@ module Enumerable
   # my_inject
 
   def my_inject(arg1 = 0, arg2 = nil)
-    if (!block_given? && (arg1 == 0))
-      return raise LocalJumpError
-    end
-    if block_given? && self.is_a?(Range) 
+    return raise LocalJumpError if !block_given? && arg1.zero?
+
+    if block_given? && is_a?(Range)
       result = 1
       my_each do |element|
         result = yield(result, element)
-      end   
-    elsif block_given? && !self[0].is_a?(String) 
+      end
+    elsif block_given? && !self[0].is_a?(String)
       result = arg1
       my_each do |element|
         result = yield(result, element)
-      end   
-    elsif block_given? 
+      end
+    elsif block_given?
       result = self [0]
       my_each do |element|
         result = yield(result, element)
@@ -200,14 +198,10 @@ module Enumerable
   # my_injectt
 
   def my_injectt
-
     result = self[0]
 
     my_each do |item|
-
-      if block_given?
-        result = yield(result, item)
-      end
+      result = yield(result, item) if block_given?
     end
     result
   end
@@ -216,5 +210,3 @@ end
 def multiply_els(arg1 = nil)
   arg1.my_inject(:*)
 end
-
-
