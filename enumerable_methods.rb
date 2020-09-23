@@ -167,8 +167,18 @@ module Enumerable
     if (!block_given? && (arg1 == 0))
       return raise LocalJumpError
     end
-    if block_given?
+    if block_given? && self.is_a?(Range) 
+      result = 1
+      my_each do |element|
+        result = yield(result, element)
+      end   
+    elsif block_given? && !self[0].is_a?(String) 
       result = arg1
+      my_each do |element|
+        result = yield(result, element)
+      end   
+    elsif block_given? 
+      result = self [0]
       my_each do |element|
         result = yield(result, element)
       end
@@ -186,20 +196,25 @@ module Enumerable
     end
     result
   end
+
+  # my_injectt
+
+  def my_injectt
+
+    result = self[0]
+
+    my_each do |item|
+
+      if block_given?
+        result = yield(result, item)
+      end
+    end
+    result
+  end
 end
 
 def multiply_els(arg1 = nil)
   arg1.my_inject(:*)
 end
-
-
-#block = proc { |num| num < 4 }
-#range = Range.new(5, 50) 
-#puts range.my_each_with_index(&block) === range.each_with_index(&block)
-
-
-
-puts ["asdf", 3, 3, 2, 4, 8, 3, 6, 5, 0, 1, 5].my_any?("asdf")
-
 
 
