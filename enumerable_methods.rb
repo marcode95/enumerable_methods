@@ -84,7 +84,12 @@ module Enumerable
   def my_any?(arg = nil)
     condition = false
     my_each do |element|
-      if arg.is_a?(Class)
+      if arg.is_a?(Integer)
+        if element == arg
+          condition = true
+          break
+        end
+      elsif arg.is_a?(Class)
         if element.is_a?(arg)
           condition = true
           break
@@ -94,7 +99,7 @@ module Enumerable
           condition = true
           break
         end
-      else
+      elsif
         if block_given?
           if yield(element) || element.nil?
             condition = true
@@ -105,6 +110,10 @@ module Enumerable
             condition = true
             break
           end
+        end
+      elsif arg = nil && !block_given?
+        if element == false
+          break
         end
       end
     end
@@ -189,4 +198,5 @@ end
 #range = Range.new(5, 50) 
 #puts range.my_each_with_index(&block) === range.each_with_index(&block)
 
-puts [5, 3, 3, 2, 4, 8, 3, 6, 5, 0, 1, 5].my_all?(Float)
+puts ["asdf", 3, 3, 2, 4, 8, 3, 6, 5, 0, 1, 5].my_any?("asdf")
+
