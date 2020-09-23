@@ -99,17 +99,15 @@ module Enumerable
           condition = true
           break
         end
-      elsif
-        if block_given?
-          if yield(element) || element.nil?
-            condition = true
-            break
-          end
-        else
-          if element || element.nil?
-            condition = true
-            break
-          end
+      elsif block_given?
+        if yield(element) || element.nil?
+          condition = true
+          break
+        end
+      elsif !block_given?
+        if element == false || element.nil?
+          condition = false
+          break
         end
       elsif arg = nil && !block_given?
         if element == false
@@ -167,7 +165,6 @@ module Enumerable
 
   def my_inject(arg1 = 0, arg2 = nil)
     if (!block_given? && (arg1 == 0))
-      puts "tests"
       return raise LocalJumpError
     end
     if block_given?
@@ -200,9 +197,9 @@ end
 #range = Range.new(5, 50) 
 #puts range.my_each_with_index(&block) === range.each_with_index(&block)
 
-#puts ["asdf", 3, 3, 2, 4, 8, 3, 6, 5, 0, 1, 5].my_any?("asdf")
 
-my_arr = [1, 2, 3, 4, 5, 6]
+
+puts ["asdf", 3, 3, 2, 4, 8, 3, 6, 5, 0, 1, 5].my_any?("asdf")
 
 
 
