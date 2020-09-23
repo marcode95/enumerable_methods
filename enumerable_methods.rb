@@ -166,8 +166,10 @@ module Enumerable
   # my_inject
 
   def my_inject(arg1 = 0, arg2 = nil)
-    return raise LocalJumpError if !block_given? && !arg1
-
+    if (!block_given? && (arg1 == 0))
+      puts "tests"
+      return raise LocalJumpError
+    end
     if block_given?
       result = arg1
       my_each do |element|
@@ -198,5 +200,9 @@ end
 #range = Range.new(5, 50) 
 #puts range.my_each_with_index(&block) === range.each_with_index(&block)
 
-puts ["asdf", 3, 3, 2, 4, 8, 3, 6, 5, 0, 1, 5].my_any?("asdf")
+#puts ["asdf", 3, 3, 2, 4, 8, 3, 6, 5, 0, 1, 5].my_any?("asdf")
+
+my_arr = [1, 2, 3, 4, 5, 6]
+
+
 
