@@ -3,14 +3,13 @@ module Enumerable
 
   def my_each
     return enum_for(:my_each) unless block_given?
-
-    arr = *self
-    i = 0
-    while i < arr.length
-      yield(arr[i])
-      i += 1
-    end
-    arr
+      arr = *self
+      i = 0
+      while i < arr.length
+        yield(arr[i])
+        i += 1
+      end
+    self
   end
 
   # my_each_with_index
@@ -24,7 +23,7 @@ module Enumerable
       yield(arr[i], i)
       i += 1
     end
-    arr
+    self
   end
 
   # select
@@ -178,3 +177,8 @@ end
 def multiply_els(arg1 = nil)
   arg1.my_inject(:*)
 end
+
+
+block = proc { |num| num < 4 }
+range = Range.new(5, 50) 
+puts range.my_each_with_index(&block) === range.each_with_index(&block)
