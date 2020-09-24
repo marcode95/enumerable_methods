@@ -199,12 +199,13 @@ module Enumerable
 
   # my_inject
 
-  def my_inject(arg1 = 0, arg2 = nil)
-    return raise LocalJumpError if !block_given? && arg1.zero?
+  def my_inject(arg1 = nil, arg2 = nil)
+    return raise LocalJumpError if !block_given? && arg1 == 0
 
     if block_given? && is_a?(Range)
-      result = arg1 #test again
-      my_each do |element|
+      result = Array(self)[0]
+      my_each_with_index do |element, i|
+        next if i == 0
         result = yield(result, element)
       end
     elsif block_given? && !self[0].is_a?(String)
@@ -231,36 +232,8 @@ module Enumerable
     end
     result
   end
-
-  # my_injectt
-
-  def my_injectt
-    result = self[0]
-
-    my_each do |item|
-      result = yield(result, item) if block_given?
-    end
-    result
-  end
 end
 
 def multiply_els(arg1 = nil)
   arg1.my_inject(:*)
 end
-
-
-#puts (1..5).my_inject(:+)
-
-#puts %w[dog door rod blade].my_any?(5)
-
-
-
-puts %w{ant bear cat}.my_none? { |word| word.length == 5 } #=> true
-puts %w{ant bear cat}.my_none? { |word| word.length >= 4 } #=> false
-puts %w{ant bear cat}.my_none?(/d/)                        #=> true
-puts [1, 3.14, 42].my_none?(Float)                         #=> false
-puts [].my_none?                                           #=> true
-puts [nil].my_none?                                        #=> true
-puts [nil, false].my_none?                                 #=> true
-puts [nil, false, true].my_none?                           #=> false
-
