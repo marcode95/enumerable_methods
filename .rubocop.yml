@@ -37,6 +37,8 @@ Style/FrozenStringLiteralComment:
   EnforcedStyle: never
 Style/IfInsideElse:
   Enabled: false
+Style/NumericPredicate: 
+  Enabled: false
 
 Layout/HashAlignment:
   EnforcedColonStyle: key

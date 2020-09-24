@@ -206,6 +206,7 @@ module Enumerable
       result = Array(self)[0]
       my_each_with_index do |element, i|
         next if i == 0
+
         result = yield(result, element)
       end
     elsif block_given? && !self[0].is_a?(String)
