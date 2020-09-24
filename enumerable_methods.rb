@@ -105,13 +105,16 @@ module Enumerable
           condition = true
           break
         end
+      elsif arg.nil? && !block_given?
+        if element == true
+          condition = true
+          break
+        end
       elsif !block_given?
         if element == false || element.nil?
           condition = false
           break
         end
-      elsif arg.nil? && !block_given?
-        break if element == false
       end
     end
     condition
@@ -120,7 +123,41 @@ module Enumerable
   # my_none?
 
   def my_none?(arg = nil)
-    !my_any?(arg)
+    condition = true
+    my_each do |element|
+      if arg.is_a?(Integer)
+        if element == arg
+          condition = false
+          break
+        end
+      elsif arg.is_a?(Class)
+        if element.is_a?(arg)
+          condition = false
+          break
+        end
+      elsif arg.is_a?(Regexp)
+        if element.match?(arg)
+          condition = false
+          break
+        end
+      elsif block_given?
+        if yield(element) || element.nil?
+          condition = false
+          break
+        end
+      elsif arg.nil? && !block_given?
+        if element == true
+          condition = false
+          break
+        end
+      elsif !block_given?
+        if element == true || element.nil?
+          condition = false
+          break
+        end
+      end
+    end
+    condition
   end
 
   # count
@@ -166,7 +203,7 @@ module Enumerable
     return raise LocalJumpError if !block_given? && arg1.zero?
 
     if block_given? && is_a?(Range)
-      result = 1
+      result = arg1 #test again
       my_each do |element|
         result = yield(result, element)
       end
@@ -210,3 +247,20 @@ end
 def multiply_els(arg1 = nil)
   arg1.my_inject(:*)
 end
+
+
+#puts (1..5).my_inject(:+)
+
+#puts %w[dog door rod blade].my_any?(5)
+
+
+
+puts %w{ant bear cat}.my_none? { |word| word.length == 5 } #=> true
+puts %w{ant bear cat}.my_none? { |word| word.length >= 4 } #=> false
+puts %w{ant bear cat}.my_none?(/d/)                        #=> true
+puts [1, 3.14, 42].my_none?(Float)                         #=> false
+puts [].my_none?                                           #=> true
+puts [nil].my_none?                                        #=> true
+puts [nil, false].my_none?                                 #=> true
+puts [nil, false, true].my_none?                           #=> false
+
