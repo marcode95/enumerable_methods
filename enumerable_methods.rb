@@ -94,13 +94,13 @@ module Enumerable
         if element.is_a?(arg)
           condition = true
           break
-        end      
+        end
       elsif arg.is_a?(Regexp)
         if element.match?(arg)
           condition = true
           break
         end
-      elsif block_given? 
+      elsif block_given?
         if yield(element) || element.nil?
           condition = true
           break
@@ -110,13 +110,13 @@ module Enumerable
           condition = true
           break
         end
-      elsif !block_given?        
+      elsif !block_given?
         if element == arg
           condition = true
           break
-        elsif element == false || element.nil?          
-            condition = false
-            break
+        elsif element == false || element.nil?
+          condition = false
+          break
         end
       end
     end
@@ -211,24 +211,26 @@ module Enumerable
         result = yield(result, element)
       end
     elsif block_given? && is_a?(Range) && !arg1
-      
+
       result = Array(self)[0]
       my_each_with_index do |element, i|
         next if i == 0
+
         result = yield(result, element)
       end
-    elsif block_given? && !arg1 && !arg2      
+    elsif block_given? && !arg1 && !arg2
       result = Array(self)[0]
       my_each_with_index do |element, i|
         next if i == 0
-       result = yield(result, element)
+
+        result = yield(result, element)
       end
-    elsif block_given? && !self[0].is_a?(String)           
+    elsif block_given? && !self[0].is_a?(String)
       result = arg1
       my_each do |element|
         result = yield(result, element)
       end
-    elsif block_given?       
+    elsif block_given?
       result = self [0]
       my_each do |element|
         result = yield(result, element)
@@ -254,12 +256,3 @@ end
 def multiply_els(arg1 = nil)
   arg1.my_inject(:*)
 end
-
-# puts ['cat', 'dog','car'].any?('bear') 
-# puts ['cat', 'dog','car'].my_any?('bear')
-
-
-puts (1..3).inject { |prod, n| prod * n } 
-puts (1..3).my_inject { |prod, n| prod * n }
-
-
