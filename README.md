@@ -5,6 +5,8 @@
 This project is a microverse collaborative project which is part of the requirements of the microverse technical curriculum in the Ruby section.
 This project consist of different ruby enumerable methods that emulate Ruby's in-built enumerable methods
 
+<img src="images/ss1.PNG" alt="ENUM">
+
 <h3>Methods <a name = "method"></a></h3>
 <h4>The custom methods created are listed below:</h4>
 <li>my_each</li>
