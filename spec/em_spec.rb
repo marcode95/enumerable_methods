@@ -4,6 +4,7 @@ describe Enumerable do
   let(:arr) { [6, 7, 8, 9] }
   let(:range) { (6..9) }
   let(:strings) { %w[cat sheep bear] }
+  let(:edge_case) { [nil, true, 99] }
 
   describe '#my_each' do
     result = []
@@ -50,20 +51,22 @@ describe Enumerable do
 
   describe '#my_all?' do
     it 'returns true if condition is true for all' do
-      result = arr.my_all? { |n| n > 4 }
-      expect(result).to eql(true)
+      expect(arr.my_all? { |n| n > 4 }).to eql(true)
     end
     it 'returns false if condition is false for at least one' do
-      result = arr.my_all? { |n| n > 7 }
-      expect(result).to eql(false)
+      expect(arr.my_all? { |n| n > 7 }).to eql(false)
     end
-    it 'accepts parameters' do
-      result = arr.my_all?(7)
-      expect(result).to eql(false)
+    it 'accepts arguments' do
+      expect(arr.my_all?(Integer)).to eql(true)
     end
     it 'accepts strings' do
-      result = string.my_all?(7)
-      expect(result).to eql(false)
+      expect(strings.my_all? { |word| word.length <= 6 }).to eql(true)
+    end
+    it 'checks if single elements are true if no block given' do
+      expect(edge_case.my_all?).to eql(false)
+    end
+    it 'raises error if given undefined variable' do
+      expect { und_var.my_all? }.to raise_error(NameError)
     end
   end
 
