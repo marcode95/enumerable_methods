@@ -111,23 +111,25 @@ describe Enumerable do
 
   describe '#my_count' do
     it 'counts all elements' do
-      result = arr.my_count
-      expect(result).to eql(4)
+      expect(arr.my_count).to eql(4)
     end
     it 'counts certain elements' do
-      result = arr.my_count(&:even?)
-      expect(result).to eql(2)
+      expect(arr.my_count(&:even?)).to eql(2)
     end
     it 'accepts blocks' do
-      result = arr.my_count { |n| n == 7 }
-      expect(result).to eql(1)
+      expect(arr.my_count { |n| n == 7 }).to eql(1)
     end
   end
 
   describe '#my_map' do
     it 'runs block for each element' do
-      result = arr.my_map { |n| n * n }
-      expect(result).to eql([36, 49, 64, 81])
+      expect(arr.my_map { |n| n * n }).to eql([36, 49, 64, 81])
+    end
+    it 'runs block for each element' do
+      expect(range.my_map { |n| n * n }).to eql([36, 49, 64, 81])
+    end
+    it 'returns enum if no block given' do
+      expect(arr.my_map).to be_an Enumerator
     end
   end
 
