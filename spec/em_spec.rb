@@ -135,18 +135,28 @@ describe Enumerable do
 
   describe '#my_inject' do
     it 'sums up every element' do
-      result = arr.my_inject(:+)
-      expect(result).to eql(30)
+      expect(arr.my_inject(:+)).to eql(30)
     end
     it 'accepts ranges' do
-      result = range.my_inject(:+)
-      expect(result).to eql(30)
+      expect(range.my_inject(:+)).to eql(30)
     end
     it 'finds the longest word' do
       result = strings.my_inject do |memo, word|
         memo.length > word.length ? memo : word
       end
       expect(result).to eql('sheep')
+    end
+    it 'multplies all elements' do
+      expect(range.my_inject(1, :*)).to eql(3024) 
+    end
+    it 'raises error if no block given and first argument equals 0' do
+      expect{ range.my_inject(0, :*) }.to raise_error(LocalJumpError)
+    end
+  end
+
+  describe '#multiply_els' do
+    it 'multiplies all elements' do
+      expect(multiply_els(arr)).to eql(3024)
     end
   end
 end
