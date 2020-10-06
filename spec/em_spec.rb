@@ -72,31 +72,40 @@ describe Enumerable do
 
   describe '#my_any?' do
     it 'returns true if condition is true for at least one' do
-      result = arr.my_any? { |n| n > 7 }
-      expect(result).to eql(true)
+      expect(arr.my_any? { |n| n > 7 }).to eql(true)
     end
     it 'returns false if condition is false for all' do
-      result = arr.my_any? { |n| n > 20 }
-      expect(result).to eql(false)
+      expect(arr.my_any? { |n| n > 20 }).to eql(false)
     end
-    it 'accepts parameters' do
-      result = arr.my_any?(7)
-      expect(result).to eql(true)
+    it 'accepts arguments' do
+      expect(arr.my_any?(7)).to eql(true)
+    end
+    it 'accepts strings' do
+      expect(strings.my_any? { |word| word.length < 5 }).to eql(true)
+    end
+    it 'checks if single elements are true if no block given' do
+      expect(edge_case.my_any?).to eql(true)
+    end
+    it 'raises error if given too many arguments' do
+      expect { arr.my_all?(Integer, Float) }.to raise_error(ArgumentError)
     end
   end
 
   describe '#my_none?' do
     it 'returns true if condition is false for all' do
-      result = arr.my_none? { |n| n > 20 }
-      expect(result).to eql(true)
+      expect(arr.my_none? { |n| n > 20 }).to eql(true)
     end
     it 'returns false if condition is true for at least one' do
-      result = arr.my_none? { |n| n > 8 }
-      expect(result).to eql(false)
+      expect(arr.my_none? { |n| n > 8 }).to eql(false)
     end
-    it 'accepts parameters' do
-      result = arr.my_none?(7)
-      expect(result).to eql(false)
+    it 'accepts arguments' do
+      expect(arr.my_none?(7)).to eql(false)
+    end
+    it 'accepts strings' do
+      expect(strings.my_none? { |word| word.length < 5 }).to eql(false)
+    end
+    it 'checks if single elements are true if no block given' do
+      expect(edge_case.my_none?).to eql(false)
     end
   end
 
