@@ -52,6 +52,10 @@ cd enumerable-methods
 
 Lastly run either of the commands listed in the getting started section above.
 
+## Testing
+
+To test this code download RSpec, access the repository using the terminal, write rspec and execute.
+
 ## Authors
 
 👤 **Marco Erhardt**
