@@ -19,7 +19,7 @@ describe Enumerable do
       expect(arr.my_each).to be_an Enumerator
     end
     it 'returns error if given argument' do
-      expect{ arr.my_each(3) }.to raise_error(ArgumentError)
+      expect { arr.my_each(3) }.to raise_error(ArgumentError)
     end
   end
 
@@ -36,7 +36,7 @@ describe Enumerable do
       expect(arr.my_each_with_index).to be_an Enumerator
     end
     it 'returns error if given argument' do
-      expect{ arr.my_each_with_index(3) }.to raise_error(ArgumentError)
+      expect { arr.my_each_with_index(3) }.to raise_error(ArgumentError)
     end
   end
 
@@ -147,10 +147,10 @@ describe Enumerable do
       expect(result).to eql('sheep')
     end
     it 'multplies all elements' do
-      expect(range.my_inject(1, :*)).to eql(3024) 
+      expect(range.my_inject(1, :*)).to eql(3024)
     end
     it 'raises error if no block given and first argument equals 0' do
-      expect{ range.my_inject(0, :*) }.to raise_error(LocalJumpError)
+      expect { range.my_inject(0, :*) }.to raise_error(LocalJumpError)
     end
   end
 
