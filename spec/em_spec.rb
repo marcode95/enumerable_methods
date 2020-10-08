@@ -1,4 +1,4 @@
-require './enumerable_methods.rb'
+require_relative '../enumerable_methods.rb'
 
 describe Enumerable do
   let(:arr) { [6, 7, 8, 9] }
